@@ -1,0 +1,78 @@
+// Login mit Basic Authentication mit korrekten Credentials admin:123
+###
+# @name loginAdminCorrect
+POST https://localhost/authenticate
+Authorization: Basic YWRtaW46MTIz
+
+###
+@adminToken = {{loginAdminCorrect.response.headers.Authorization}}
+
+###
+// Tournament Tests
+###
+
+// READ alle Tournaments (public)
+// Rückgabe: array aller Tournaments, die public sind
+###
+https://localhost/tournament
+
+// READ alle Tournaments des eingeloggten users (mittels token)
+// Rückgabe: array aller Tournaments in denen der user ist (als Admin oder Teilnehmer)
+###
+https://localhost/tournament/getByToken
+Authorization: {{adminToken}}
+
+// READ bestimmtes Tournament
+// Rückgabe: Details Tournament
+// Use-cases: Profil eines Tournaments
+// Hier muss im Backend bei nicht öffentlichen Turnieren noch abgefragt werden, ob der User im angefragten Turnier ist. Wenn nicht, darf er es nicht sehen.
+###
+POST http://localhost/tournament/getByID
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+ "_id": "6196856afcf7d42fb01a1691"
+}
+
+// CREATE Tournament 
+// der Anfragende user ist owner (vermerken!)
+// Rückgabe: Tournament Details
+###
+# @name createTournamentRequest
+POST https://localhost/tournament
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+    "name": "Meine erste Liga",
+    "description": "Das ist eine erste Liga ausm Test",
+    "event": "Tischtennis",
+    // noch die Turnierbaum Anforderungen dazu? Oder es wird dabei ein neuer Request Create TournamentTree Request auf der tournament route gemacht
+}
+// note: tournamentState und admin Objekte werden automatisch erstellt, stehen nicht im Request
+
+###
+@tournamentID = {{createTournamentRequest.response.body._id}}
+
+// UPDATE Tournament
+// vllt update Zeitstempel (+ was wurde edited?) hinzufügen? (nicht im Request sondern automatisch)
+// Rückgabe: Tournament
+### 
+PUT https://localhost/tournament
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+    "_id": "{{tournamentID}}",
+    "description": "Das ist der neue Text"
+}
+
+### DELETE Tournament
+DELETE  https://localhost/tournament
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+    "_id": "{{tournamentID}}"
+}

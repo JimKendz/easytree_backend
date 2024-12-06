@@ -1,0 +1,67 @@
+// Login mit Basic Authentication mit korrekten Credentials admin:123
+###
+# @name loginAdminCorrect
+POST https://localhost/authenticate
+Authorization: Basic YWRtaW46MTIz
+
+###
+@adminToken = {{loginAdminCorrect.response.headers.Authorization}}
+
+###
+// TournamentTree Tests
+###
+
+// READ bestimmten TournamentTree
+// Rückgabe: Details TournamentTree
+// Use-cases: Ansicht des TournamentTrees in einem Tournament
+###
+POST http://localhost:8080/tournamentTree/getByID
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+ "_id": "6196856afcf7d42fb01a1691"
+}
+
+// CREATE TournamentTree 
+// Wird nie im Frontend requested, sondern im Backend durch die Tournament Erstellung angestoßen. Brauchen wir dann überhaupt eine Route dafür?
+// Wird bei der Erstellung eines Tournaments nach CreateTournament aufgerufen (Dann wird der TournamentTree mit Matches gefüllt)
+// Es muss das dazugehörige Tournament vermerkt werden
+// Rückgabe: TournamentTree Details
+###
+# @name createTournamentTreeRequest
+POST https://localhost/tournamentTree
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+    "treeSystem": /* enum treeSystem (siehe UML Model) */
+}
+// Dabei werden automatisch je nach treeSystem die rounds in der roundsList erstellt und die leeren Matches in den rounds erstellt
+// Die Teams werden in die Matches gelost, sobald das Turnier voll ist und der Admin den drawPhase tournamentState auf die nächste Phase ändert
+
+###
+@tournamentTreeID = {{createTournamentTreeRequest.response.body._id}}
+
+// UPDATE TournamentTree
+// vllt update Zeitstempel (+ was wurde edited?) hinzufügen? (nicht im Request sondern automatisch)
+// Rückgabe: TournamentTree
+### 
+PUT https://localhost/tournamentTree
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+    "_id": "{{tournamentTreeID}}",
+    "status": // hier dann bsw. round2
+}
+// ODER ist das besser ein POST Request nur mit der ID und der status wird einfach automatisch erhöht? (Wenn möglich wird erhöht von bsw. round1 auf round2, aber wenn keine nächste round mehr in der roundsList ist, dann wird das Tournament angesprochen, dass der TournamentTree durch ist und dann wird entweder der nächste TournamentTree aktiviert oder falls fertig der tournamentState auf completed gesetzt)
+
+### DELETE TournamentTree
+DELETE  https://localhost/tournamentTree
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+    "_id": "{{tournamentTreeID}}"
+}

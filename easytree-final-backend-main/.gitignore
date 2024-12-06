@@ -1,0 +1,53 @@
+# Ignore typical output directories
+dist
+target
+out
+.webpack
+# Node.js specific
+node_modules
+# Cache directories
+.npm
+.eslintcache
+.tsbuildinfo
+# macos specific files
+.DS_Store
+# test output
+junit.xml
+coverage
+# mongodb
+mongodata
+mongodatatest
+# ignore log files
+*.log
+
+#ignore public and private key
+*.crt
+*.key
+
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# next.js
+frontend/.next/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+*.key
+*.crt

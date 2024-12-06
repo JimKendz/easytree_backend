@@ -1,0 +1,20 @@
+// Login mit Basic Authentication mit korrekten Credentials admin:123
+###
+# @name loginAdminCorrect
+POST https://localhost/authenticate
+Authorization: Basic YWRtaW46MTIz
+
+###
+@adminToken = {{loginAdminCorrect.response.headers.Authorization}}
+
+
+// Login user
+###
+POST https://localhost:3001/api/login
+Content-Type: application/json
+
+{
+    "email": "john@some-host.de",
+    //"admin": false,
+    "password": "123asdf!ABCD"
+}

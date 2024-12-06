@@ -1,0 +1,109 @@
+// Login mit Basic Authentication mit korrekten Credentials admin:123
+###
+# @name loginAdminCorrect
+POST https://localhost/authenticate
+Authorization: Basic YWRtaW46MTIz
+
+###
+@adminToken = {{loginAdminCorrect.response.headers.Authorization}}
+
+###
+// Match Tests
+###
+
+// READ Matches des eingeloggten users oder Teams (mittels token)
+// Rückgabe: Array Matches
+// Use-cases: eigene MatchHistory und kommende Matches
+###
+https://localhost/match/getByToken
+Authorization: {{adminToken}}
+
+// READ bestimmtes Match
+// Rückgabe: Details Match
+// Use-cases: Stats-page eines Matches
+###
+POST http://localhost:8080/match/getByMatchID
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+ "_id": "6196856afcf7d42fb01a1691"
+}
+
+// READ Matches eines Tournaments
+// Darf nur bei öffentlichen Tournaments oder als Teilnehmer des privaten Tournaments gehen
+// Rückgabe: Array Matches
+// Use-cases: MatchHistory und auch kommende Matches eines Tournaments
+###
+POST http://localhost:8080/match/getByTournamentID
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+ "_id": "6196856afcf7d42fb01a1691"
+}
+
+// READ Matches eines Teams
+// Rückgabe: Array Matches
+// Use-cases: MatchHistory und kommende Matches eines Teams
+###
+POST http://localhost:8080/match/getByTeamID
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+ "_id": "6196856afcf7d42fb01a1691"
+}
+
+// READ Matches eines anderen Spielers
+// Rückgabe: Array Matches
+// Use-cases: MatchHistory eines anderen Spielers
+###
+POST http://localhost:8080/match/getByUserID
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+ "_id": "6196856afcf7d42fb01a1691"
+}
+
+// CREATE Match 
+// Wird nie im Frontend requested, sondern im Backend durch die TournamentTree Erstellung angestoßen. Brauchen wir dann überhaupt eine Route dafür?
+// Wird bei der Erstellung eines Tournaments erst nach CreateTournament und CreateTournamentTree aufgerufen (Dann wird der TournamentTree mit Matches gefüllt)
+// Es muss das dazugehörige Tournament und TournamentTree vermerkt werden
+// Rückgabe: Match Details
+###
+# @name createMatchRequest
+POST https://localhost/match
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+    "teams": // teamID, teamID, ....
+}
+// result mit leerer resultList[] und default matchState werden schon einmal automatisch angelegt, aber stehen dadurch nicht im Request
+
+###
+@matchID = {{createMatchRequest.response.body._id}}
+
+// UPDATE Match
+// vllt update Zeitstempel (+ was wurde edited?) hinzufügen? (nicht im Request sondern automatisch)
+// Rückgabe: Match
+### 
+PUT https://localhost/match
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+    "_id": "{{matchID}}",
+    "result": // resultList[]
+}
+
+### DELETE Match
+DELETE  https://localhost/match
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+    "_id": "{{matchID}}"
+}

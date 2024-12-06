@@ -1,0 +1,69 @@
+// Login mit Basic Authentication mit korrekten Credentials admin:123
+###
+# @name loginAdminCorrect
+POST https://localhost/authenticate
+Authorization: Basic YWRtaW46MTIz
+
+###
+@adminToken = {{loginAdminCorrect.response.headers.Authorization}}
+
+###
+// User Tests
+###
+
+// READ alle user (mit AdminToken)
+// Rückgabe: alle user ohne passwörter
+###
+https://localhost/user
+Authorization: {{adminToken}}
+
+// READ user selbst (eingeloggter, mittels token)
+// Rückgabe: alle Daten zum user außer Passwort
+// Use-cases: bsw für die Daten im eigenen Profil
+###
+https://localhost/user/getByToken
+Authorization: {{adminToken}}
+
+// READ bestimmten User
+// Rückgabe: User Details außer Passwort
+// Use-cases: Profil eines anderen Spielers
+###
+POST http://localhost/user/getByID
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+ "_id": "6196856afcf7d42fb01a1691"
+}
+
+// CREATE user
+###
+POST https://localhost:3001/api/user
+Content-Type: application/json
+
+{
+    "name": "mannffi",
+    "email": "testfffiitest@gmail.com",
+    //"admin": false,
+    "password": "asdf"
+}
+
+// UPDATE user
+###
+PUT https://localhost/user
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+    "_id": "6196856afcf7d42fb01a1691",
+    "email": "editedmail@gmail.com"
+}
+
+### DELETE user
+DELETE  https://localhost/user
+Authorization: {{adminToken}}
+Content-Type: application/json
+
+{
+    "_id": "6196856afcf7d42fb01a1691"
+}
