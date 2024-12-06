@@ -1,24 +1,31 @@
-# Easy Tree
+# EasyTree
 
-## Projektbeschreibung
+## Project Description
 
-Easy Tree ist eine Web-Anwendung zur Erstellung und Durchführung von Turnieren. Es können komplexe Turnierbäume einfach generiert werden. Die User können sich anmelden oder registrieren und sich bei verschiedenen Turnieren anmelden. Die Ergebnisse der Turniere werden eingetragen und man kann verschiedene Statistiken zu den jeweiligen Ergebnissen/Turnieren einsehen.
+Welcome to our Project!
 
-## Teammitglieder
+Easy Tree is a web application designed for creating and managing tournaments. It allows the easy generation of complex tournament brackets. Users can sign up or register and participate in various tournaments. Tournament results can be entered, and users have the ability to view information related to the respective results and tournaments.
+\
+\
+You can visit our website here: https://easytree.vercel.app/
 
-| Mitglied  | Matrikelnummer | E-Mail-Adresse |
-|---|---|---|
-| Kjeld Hubein | 920949 | s51071@bht-berlin.de |
-| Jan Wilhelm Jesco Jores | 906100 | s81917@bht-berlin.de |
-| Irfan Karakas | 844255 | s63649@bht-berlin.de |
-| Jim Kendzierski | 913059 | s84761@bht-berlin.de |
-| Anna Nguyen | 932157 | s89203@bht-berlin.de |
-| Jesse Städter | 936423 | s88539@bht-berlin.de   |
+## Our Team
 
-## Technologie-Stack
+| Member |
+|---|
+| Kjeld Hubein |
+| Jan Wilhelm Jesco Jores |
+| Irfan Karakas |
+| Jim Kendzierski |
+| Anna Nguyen |
+| Jesse Städter |
 
-Design: Figma <br/>
-Organisation: GitLab <br/>
-Frontend: Next.js <br/>
-Backend: Express + MongoDB + Mongoose (+ Swagger)
+## Techstack & Tooling
 
+**Design:** [Figma](https://www.figma.com/de/) + [StarUML](https://staruml.io/)   
+**Organisation:** [GitLab](https://about.gitlab.com/) + [Discord](https://discord.com/)   
+**Frontend:** [Next.js](https://nextjs.org/) + [NextAuth](https://next-auth.js.org/configuration/nextjs) + [Shadcn](https://ui.shadcn.com/) + [Tailwind CSS](https://tailwindcss.com/)   
+**Backend:** [Node.js](https://nodejs.org/en) + [Express](https://expressjs.com/de/) + [Mongoose](https://mongoosejs.com/) + [Swagger](https://swagger.io/)   
+**Build:** [GitLab CI/CD](https://docs.gitlab.com/ee/ci/) + [npm](https://www.npmjs.com/)   
+**Test:** [Jest](https://jestjs.io/) + [ESLint](https://eslint.org/)   
+**Deployment:** [Vercel(Frontend)](https://vercel.com/) + [Render(Backend)](https://render.com/) + [MongoDB(Database)](https://www.mongodb.com/)
